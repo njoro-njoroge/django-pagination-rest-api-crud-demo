@@ -35,8 +35,7 @@ def get_fruits(request):
     # Serialize the paginated queryset and pass the request context
     serializer = FruitSerializers(paginated_fruits, many=True, context={'request': request})
 
-    # Use the paginator's response format
-    return paginator.get_paginated_response({"fruits": serializer.data})
+    return paginator.get_paginated_response(serializer.data)
 
 
 @api_view(["GET", "PUT", "DELETE"])
@@ -48,13 +47,13 @@ def fruit_details(request, pk):
 
     if request.method == "GET":
         serializer = FruitSerializers(fruit, context={'request': request})
-        return Response({"fruits": serializer.data})
+        return Response({"results": serializer.data})
 
     elif request.method == "PUT":
         serializer = FruitSerializers(fruit, data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
-            return Response({"message": "Update successful", "fruits": serializer.data})
+            return Response({"message": "Update successful", "results": serializer.data})
 
         return Response(
             {"message": "Update failed", "errors": serializer.errors},
@@ -64,6 +63,3 @@ def fruit_details(request, pk):
     elif request.method == "DELETE":
         fruit.delete()
         return Response({"message": "Fruit deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
-
-
-
