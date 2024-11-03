@@ -42,14 +42,28 @@ def get_fruits(request):
 @api_view(["GET", "PUT", "DELETE"])
 def fruit_details(request, pk):
     try:
-        if request.method == "GET":
-            return Response("happy fruit")
+        fruit = Fruit.objects.get(pk=pk)
+    except Fruit.DoesNotExist:
+        return Response({"message": "Fruit not found"}, status=status.HTTP_404_NOT_FOUND)
 
-        elif request.method == "PUT":
-            return Response("updated fruit")
+    if request.method == "GET":
+        serializer = FruitSerializers(fruit, context={'request': request})
+        return Response({"fruits": serializer.data})
 
-        elif request.method == "DELETE":
-            return Response("Deleted fruit")
-    except Exception:
+    elif request.method == "PUT":
+        serializer = FruitSerializers(fruit, data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Update successful", "fruits": serializer.data})
 
-        return Response("ERROR fruit")
+        return Response(
+            {"message": "Update failed", "errors": serializer.errors},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    elif request.method == "DELETE":
+        fruit.delete()
+        return Response({"message": "Fruit deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+
+
+
