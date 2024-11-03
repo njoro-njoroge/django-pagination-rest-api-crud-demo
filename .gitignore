@@ -1,0 +1,46 @@
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.sqlite3
+
+# Virtual Environment
+venv/
+env/
+
+# Django specific
+*.log
+*.pot
+*.pyc
+*.pyo
+*.sqlite3
+db.sqlite3
+*.py[cod]
+*~
+*.swp
+
+# Django Migrations
+**/migrations/*.py
+!**/migrations/__init__.py
+
+# Media & Static files (only if you're not storing them in version control)
+media/
+staticfiles/
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# Environments and dependencies
+.env          # environment variable file
+.env.local    # local development environment variables
