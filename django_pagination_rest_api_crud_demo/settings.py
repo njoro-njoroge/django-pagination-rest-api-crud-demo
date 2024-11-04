@@ -41,6 +41,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 5,  # Number of items per page
+}
+
 ROOT_URLCONF = 'django_pagination_rest_api_crud_demo.urls'
 
 TEMPLATES = [

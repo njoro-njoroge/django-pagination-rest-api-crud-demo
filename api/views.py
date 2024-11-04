@@ -27,9 +27,6 @@ def get_fruits(request):
 
     # Set up pagination
     paginator = PageNumberPagination()
-    paginator.page_size = 5  # You can set a custom page size here
-
-    # Apply pagination to the queryset
     paginated_fruits = paginator.paginate_queryset(fruits, request)
 
     # Serialize the paginated queryset and pass the request context
